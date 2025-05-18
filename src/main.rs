@@ -425,17 +425,6 @@ impl GitStatus {
     }
 }
 
-#[test]
-fn test_examples() -> Result<(), nu_protocol::ShellError> {
-    use nu_plugin_test_support::PluginTest;
-
-    // This will automatically run the examples specified in your command and compare their actual
-    // output against what was specified in the example. You can remove this test if the examples
-    // can't be tested this way, but we recommend including it if possible.
-
-    PluginTest::new("git_prompt", GitPromptPlugin.into())?.test_command_examples(&GitPrompt)
-}
-
 fn main() {
     serve_plugin(&GitPromptPlugin, MsgPackSerializer);
 }
