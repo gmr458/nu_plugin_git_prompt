@@ -1,10 +1,12 @@
-use git2::{BranchType, Repository, Status, StatusOptions};
-use nu_plugin::{serve_plugin, MsgPackSerializer, Plugin, PluginCommand};
-use nu_plugin::{EngineInterface, EvaluatedCall, SimplePluginCommand};
-use nu_protocol::{Category, Example, LabeledError, Signature, Value};
 use std::fmt::Write;
 use std::path::Path;
 use std::process::Command;
+
+use nu_plugin::{serve_plugin, MsgPackSerializer, Plugin, PluginCommand};
+use nu_plugin::{EngineInterface, EvaluatedCall, SimplePluginCommand};
+use nu_protocol::{Category, Example, LabeledError, Signature, Value};
+
+use git2::{BranchType, Repository, Status, StatusOptions};
 use walkdir::WalkDir;
 
 #[derive(Debug)]
