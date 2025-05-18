@@ -8,17 +8,11 @@ description = "a nushell plugin called git_prompt"
 repository = "https://github.com/gmr458/nu_plugin_git_prompt"
 license = "MIT"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 git2 = "0.20.2"
-# for local development, you can use a path dependency
-# nu-plugin = { path = "../nushell/crates/nu-plugin" }
-# nu-protocol = { path = "../nushell/crates/nu-protocol", features = ["plugin"] }
 nu-plugin = "0.104.0"
 nu-protocol = { version = "0.104.0", features = ["plugin"] }
 walkdir = "2.5.0"
 
 [dev-dependencies]
-# nu-plugin-test-support = { path = "../nushell/crates/nu-plugin-test-support" }
 nu-plugin-test-support = { version = "0.104.0" }
