@@ -40,18 +40,7 @@ impl SimplePluginCommand for GitPrompt {
     }
 
     fn examples(&self) -> Vec<Example> {
-        vec![
-            Example {
-                example: "git_prompt Ellie",
-                description: "Say hello to Ellie",
-                result: Some(Value::test_string("Hello, Ellie. How are you today?")),
-            },
-            Example {
-                example: "git_prompt --shout Ellie",
-                description: "Shout hello to Ellie",
-                result: Some(Value::test_string("HELLO, ELLIE. HOW ARE YOU TODAY?")),
-            },
-        ]
+        vec![]
     }
 
     fn run(
