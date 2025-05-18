@@ -1,9 +1,10 @@
-use git2::{BranchType, DescribeOptions, Repository, Status, StatusOptions};
+use git2::{BranchType, Repository, Status, StatusOptions};
 use nu_plugin::{serve_plugin, MsgPackSerializer, Plugin, PluginCommand};
 use nu_plugin::{EngineInterface, EvaluatedCall, SimplePluginCommand};
 use nu_protocol::{Category, Example, LabeledError, Signature, Value};
 use std::fmt::Write;
 use std::path::Path;
+use std::process::Command;
 use walkdir::WalkDir;
 
 #[derive(Debug)]
@@ -249,17 +250,18 @@ impl GitStatus {
             Err(_) => "HEAD".to_string(),
         };
 
-        let mut desc_opts = DescribeOptions::new();
-        desc_opts.describe_tags();
-
-        let tag = if let Ok(Ok(s)) = repo
-            .describe(&desc_opts)
-            .map(|describe| describe.format(None))
-        {
-            s
-        } else {
-            String::new()
-        };
+        let mut tag = String::new();
+        let output_result = Command::new("git")
+            .args(["describe", "--tags", "--abbrev=0"])
+            .current_dir(repo_path)
+            .output();
+        if let Ok(output) = output_result {
+            if output.status.success() {
+                if let Ok(stdout) = String::from_utf8(output.stdout) {
+                    tag = stdout.trim().to_string();
+                }
+            }
+        }
 
         let mut status_options = StatusOptions::new();
         status_options
