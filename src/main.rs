@@ -1,4 +1,5 @@
 use std::fmt::Write;
+use std::ops::BitAnd;
 use std::path::Path;
 use std::process::Command;
 
@@ -265,51 +266,51 @@ impl GitStatus {
         statuses.iter().for_each(|status_entry| {
             let status = status_entry.status();
 
-            if status == Status::INDEX_NEW {
+            if check(status, Status::INDEX_NEW) {
                 index_new += 1;
             }
 
-            if status == Status::INDEX_MODIFIED {
+            if check(status, Status::INDEX_MODIFIED) {
                 index_modified += 1;
             }
 
-            if status == Status::INDEX_DELETED {
+            if check(status, Status::INDEX_DELETED) {
                 index_deleted += 1;
             }
 
-            if status == Status::INDEX_RENAMED {
+            if check(status, Status::INDEX_RENAMED) {
                 index_renamed += 1;
             }
 
-            if status == Status::INDEX_TYPECHANGE {
+            if check(status, Status::INDEX_TYPECHANGE) {
                 index_typechange += 1;
             }
 
-            if status == Status::WT_NEW {
+            if check(status, Status::WT_NEW) {
                 wt_new += 1;
             }
 
-            if status == Status::WT_MODIFIED {
+            if check(status, Status::WT_MODIFIED) {
                 wt_modified += 1;
             }
 
-            if status == Status::WT_DELETED {
+            if check(status, Status::WT_DELETED) {
                 wt_deleted += 1;
             }
 
-            if status == Status::WT_RENAMED {
+            if check(status, Status::WT_RENAMED) {
                 wt_renamed += 1;
             }
 
-            if status == Status::WT_TYPECHANGE {
+            if check(status, Status::WT_TYPECHANGE) {
                 wt_typechange += 1;
             }
 
-            if status == Status::IGNORED {
+            if check(status, Status::IGNORED) {
                 ignored += 1;
             }
 
-            if status == Status::CONFLICTED {
+            if check(status, Status::CONFLICTED) {
                 conflicted += 1;
             }
         });
@@ -412,6 +413,15 @@ impl GitStatus {
 
         red.join(" ")
     }
+}
+
+/// Check the bits of a flag against the value to see if they are set
+#[inline]
+fn check<B>(val: B, flag: B) -> bool
+where
+    B: BitAnd<Output = B> + PartialEq + Copy,
+{
+    val & flag == flag
 }
 
 fn main() {
