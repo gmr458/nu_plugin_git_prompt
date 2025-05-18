@@ -36,7 +36,7 @@ impl SimplePluginCommand for GitPrompt {
     }
 
     fn description(&self) -> &str {
-        "(FIXME) help text for git_prompt"
+        "One line git status output to show in your nushell prompt"
     }
 
     fn examples(&self) -> Vec<Example> {
