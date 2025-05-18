@@ -79,12 +79,10 @@ impl SimplePluginCommand for GitPrompt {
         let git_dir = path_current_dir.join(".git");
         if git_dir.is_dir() {
             let mut size: u64 = 0;
-            for entry_result in WalkDir::new(git_dir) {
-                if let Ok(entry) = entry_result {
-                    if let Ok(metadata) = entry.metadata() {
-                        if metadata.is_file() {
-                            size += metadata.len();
-                        }
+            for entry in WalkDir::new(git_dir).into_iter().flatten() {
+                if let Ok(metadata) = entry.metadata() {
+                    if metadata.is_file() {
+                        size += metadata.len();
                     }
                 }
             }
@@ -368,7 +366,7 @@ impl GitStatus {
             greens.push(format!("+t{}", self.index_typechange));
         }
 
-        return greens.join(" ");
+        greens.join(" ")
     }
 
     pub fn get_yellow(&self) -> String {
@@ -398,7 +396,7 @@ impl GitStatus {
             yellow.push(format!("↓{}", self.behind));
         }
 
-        return yellow.join(" ");
+        yellow.join(" ")
     }
 
     pub fn get_gray(&self) -> String {
@@ -406,7 +404,7 @@ impl GitStatus {
             return format!("!{}", self.ignored);
         }
 
-        return String::new();
+        String::new()
     }
 
     pub fn get_red(&self) -> String {
@@ -424,7 +422,7 @@ impl GitStatus {
             red.push(format!("c{}", self.conflicted));
         }
 
-        return red.join(" ");
+        red.join(" ")
     }
 }
 
