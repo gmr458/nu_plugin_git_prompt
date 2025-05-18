@@ -190,7 +190,7 @@ impl GitStatus {
                 if let Some(name) = reference.shorthand() {
                     if name == "HEAD" {
                         if let Ok(commit) = reference.peel_to_commit() {
-                            let mut id = String::new();
+                            let mut id = String::with_capacity(8);
                             for byte in &commit.id().as_bytes()[..4] {
                                 write!(&mut id, "{byte:x}").unwrap();
                             }
