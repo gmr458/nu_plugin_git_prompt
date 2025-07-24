@@ -10,7 +10,7 @@ use nu_protocol::{Category, Example, LabeledError, Signature, Value};
 use git2::{BranchType, Repository, Status, StatusOptions};
 use walkdir::WalkDir;
 
-const GIT_DIR_SIZE_THRESHOLD: u64 = 1_000_000_000;
+const GIT_DIR_SIZE_THRESHOLD: u64 = 10_000_000;
 
 #[derive(Debug)]
 pub struct GitPromptPlugin;
